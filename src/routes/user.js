@@ -1,6 +1,7 @@
 const express = require('express')
 const authRouter = express.Router()
-const { registerControtler, loginControtler, logoutControtler } = require('../controllers/user')
+const { registerControtler, loginControtler, logoutControtler, getmeControtler } = require('../controllers/user')
+const { authMiddleware } = require('../middlewares/auth')
 
 /**
 @route POST /api/auth/ register
@@ -17,6 +18,8 @@ authRouter.post('/register', registerControtler)
 authRouter.post('/login', loginControtler )
 
 authRouter.get('/logout', logoutControtler )
+
+authRouter.get('/get-me' , authMiddleware , getmeControtler )
 
 
 module.exports = authRouter
