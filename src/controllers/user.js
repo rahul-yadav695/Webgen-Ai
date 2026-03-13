@@ -97,6 +97,8 @@ const loginControtler = async (req, res) => {
 }
 
 
+
+
 const logoutControtler = async (req, res) => {
     try {
 
@@ -118,4 +120,21 @@ const logoutControtler = async (req, res) => {
     }
 }
 
-module.exports = { registerControtler, loginControtler, logoutControtler }
+const getmeControtler = async (req, res) => {
+    try {
+        const user = await userModel.findById(req.user.id)
+
+        res.send({
+            message: "user found",
+            id: user._id,
+            userName: user.userName,
+            email: user.email
+        })
+    } catch (err) {
+        console.log(err)
+        res.status(500).json({ message: "server error" })
+    }
+}
+
+
+module.exports = { registerControtler, loginControtler, logoutControtler, getmeControtler }
