@@ -1,6 +1,6 @@
 require('dotenv').config()
 const express = require('express')
-const connectDB = require('./src/config/data')
+const connectDB = require('../src/config/data')
 const cookieParser = require("cookie-parser")
 
 const app = express()
@@ -11,7 +11,7 @@ app.use(cookieParser())
 
 connectDB()
 
-const authRouter = require('./src/routes/user')
+const authRouter = require('../src/routes/user')
 app.use('/api', authRouter)
 
 app.listen(port, () => {
