@@ -1,11 +1,14 @@
 import React from 'react'
 import { RouterProvider } from 'react-router-dom'
 import { router } from './app.routes.jsx'
+import { AuthProvider } from './features/auth/services/auth.conext.jsx'
 
 const App = () => {
   return (
     <>
-      <RouterProvider router={router} />
+      <AuthProvider>
+        <RouterProvider router={router} />
+      </AuthProvider>
     </>
   )
 }
