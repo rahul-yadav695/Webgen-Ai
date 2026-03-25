@@ -1,27 +1,45 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
+import { useAuth } from '../services/auth.conext.jsx'
 
 const Login = () => {
 
+    const { setUser } = useAuth()
+
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
+    const [btnLoading, setBtnLoading] = useState(false)
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault()
 
-        console.log("Email:", email)
-        console.log("Password:", password)
+        if (!email || !password) {
+            alert("Please fill all fields")
+            return
+        }
 
-    }
+        setBtnLoading(true)
 
-    if (<main><h1>Loading...</h1></main>) {
-        
+        try {
+            console.log("Email:", email)
+            console.log("Password:", password)
+ 
+            const fakeUser = { email }
+            setUser(fakeUser)
+
+            // 👉 redirect later (useNavigate)
+            
+        } catch (err) {
+            console.log("Login Error:", err)
+        } finally {
+            setBtnLoading(false)
+        }
     }
 
     return (
         <div className="min-h-screen bg-black flex items-center justify-center px-4 sm:px-6 md:px-8">
 
-            <div className="w-full max-w-md sm:max-w-lg md:max-w-md bg-black">
+            <div className="w-full max-w-md bg-black">
 
                 <h1 className="text-white text-3xl sm:text-4xl md:text-5xl font-bold mb-6 sm:mb-8 text-center sm:text-left">
                     Login
@@ -31,15 +49,16 @@ const Login = () => {
 
                     <div className="mb-4">
                         <label className="text-white block mb-2 text-sm sm:text-base">Email</label>
-                        <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Enter email address" className="w-full px-4 py-2 sm:py-3 rounded-full bg-gray-200 outline-none focus:ring-2 focus:ring-pink-500 text-sm sm:text-base" />
+                        <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Enter email address" className="w-full px-4 py-2 sm:py-3 rounded-full bg-gray-200 outline-none focus:ring-2 focus:ring-pink-500 focus:ring-offset-2 transition text-sm sm:text-base" />
                     </div>
 
                     <div className="mb-6">
                         <label className="text-white block mb-2 text-sm sm:text-base">Password</label>
-                        <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Enter password" className="w-full px-4 py-2 sm:py-3 rounded-full bg-gray-200 outline-none focus:ring-2 focus:ring-pink-500 text-sm sm:text-base" />
+                        <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Enter password" className="w-full px-4 py-2 sm:py-3 rounded-full bg-gray-200 outline-none focus:ring-2 focus:ring-pink-500 focus:ring-offset-2 transition text-sm sm:text-base" />
                     </div>
 
-                    <button type="submit" className="w-full bg-pink-600 hover:bg-pink-700 text-white py-2 sm:py-3 rounded-full font-semibold transition duration-300 text-sm sm:text-base">    Login
+                    <button type="submit" disabled={btnLoading} className="w-full bg-pink-600 hover:bg-pink-700 disabled:bg-gray-500 text-white py-2 sm:py-3 rounded-full font-semibold transition duration-300 text-sm sm:text-base">
+                        {btnLoading ? "Logging in..." : "Login"}
                     </button>
 
                 </form>
