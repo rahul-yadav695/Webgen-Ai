@@ -14,6 +14,10 @@ const Login = () => {
 
     }
 
+    if (<main><h1>Loading...</h1></main>) {
+        
+    }
+
     return (
         <div className="min-h-screen bg-black flex items-center justify-center px-4 sm:px-6 md:px-8">
 
