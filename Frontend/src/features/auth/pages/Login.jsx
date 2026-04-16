@@ -1,39 +1,29 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
-import { useAuth } from '../services/auth.conext.jsx'
+import  {useAuth}  from '../services/auth.conext.jsx'
 
 const Login = () => {
 
-    const { setUser } = useAuth()
+    const { Loading, handleLogin } = useAuth()
 
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
-    const [btnLoading, setBtnLoading] = useState(false)
 
     const handleSubmit = async (e) => {
         e.preventDefault()
+        handleLogin({ email, password })
+    }
 
-        if (!email || !password) {
-            alert("Please fill all fields")
-            return
-        }
+    if (Loading) {
+     return  <h1>Loading....</h1>
+    }
 
-        setBtnLoading(true)
-
-        try {
-            console.log("Email:", email)
-            console.log("Password:", password)
- 
-            const fakeUser = { email }
-            setUser(fakeUser)
-
-            // 👉 redirect later (useNavigate)
-            
-        } catch (err) {
-            console.log("Login Error:", err)
-        } finally {
-            setBtnLoading(false)
-        }
+    if (Loading) {
+        return (
+            <div className="min-h-screen bg-black flex items-center justify-center">
+                <p className="text-white text-lg">Logging in...</p>
+            </div>
+        )
     }
 
     return (
@@ -57,8 +47,8 @@ const Login = () => {
                         <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Enter password" className="w-full px-4 py-2 sm:py-3 rounded-full bg-gray-200 outline-none focus:ring-2 focus:ring-pink-500 focus:ring-offset-2 transition text-sm sm:text-base" />
                     </div>
 
-                    <button type="submit" disabled={btnLoading} className="w-full bg-pink-600 hover:bg-pink-700 disabled:bg-gray-500 text-white py-2 sm:py-3 rounded-full font-semibold transition duration-300 text-sm sm:text-base">
-                        {btnLoading ? "Logging in..." : "Login"}
+                    <button type="submit" disabled={Loading} className="w-full bg-pink-600 hover:bg-pink-700 disabled:bg-gray-500 text-white py-2 sm:py-3 rounded-full font-semibold transition duration-300 text-sm sm:text-base">
+                        {Loading ? "Logging in..." : "Login"}
                     </button>
 
                 </form>

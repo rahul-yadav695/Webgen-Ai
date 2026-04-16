@@ -5,7 +5,7 @@ import { AuthProvider } from './features/auth/services/auth.conext.jsx'
 
 const App = () => {
   return (
-    <>
+    <> 
       <AuthProvider>
         <RouterProvider router={router} />
       </AuthProvider>
